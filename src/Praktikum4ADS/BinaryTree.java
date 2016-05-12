@@ -22,8 +22,12 @@ class BinaryTree {
 	    if (currentParent == null) {
 	        return newNode;
 	    } else if (newNode.getKey() > currentParent.getKey()) {
+	    	
+	    	//newNode > current, current.rightchild = insertNode(current.rightchild,newNode)
 	    	currentParent.setRightChild(insertNode(currentParent.getRightChild(), newNode));
 	    } else if (newNode.getKey() < currentParent.getKey()) {
+	    	
+	    	//newNode < current, current.leftchild = insertNode(current.leftchild,newNode)
 	    	currentParent.setLeftChild(insertNode(currentParent.getLeftChild(), newNode));
 	    }
 	    return currentParent;

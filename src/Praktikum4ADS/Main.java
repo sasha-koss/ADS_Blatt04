@@ -30,9 +30,8 @@ public class Main {
 		tree = new BinaryTree();
 		tmpSt = new Student();
 		int rnd = ThreadLocalRandom.current().nextInt(15, 50 + 1);
-		
 		while(rnd>0){
-			int rndmatnr = ThreadLocalRandom.current().nextInt(10000,20000 + 1);
+			int rndmatnr = ThreadLocalRandom.current().nextInt(100000,200000 + 1);
 			Student st = new Student(rndmatnr,"Peter","Petersen");
 			addStudent(st);
 			rnd--;
