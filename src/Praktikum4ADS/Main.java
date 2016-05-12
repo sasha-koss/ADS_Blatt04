@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Main {
 	static ArrayList<Student> studentList;
 	static BinaryTree tree;
+	static BinaryTree deletedTree;
 	static Student tmpSt;
 	
 	public static void main(String[] args) {
@@ -28,6 +29,7 @@ public class Main {
 	public static void init(){
 		studentList = new ArrayList<Student>();
 		tree = new BinaryTree();
+		deletedTree = new BinaryTree();
 		tmpSt = new Student();
 		int rnd = ThreadLocalRandom.current().nextInt(15, 50 + 1);
 		while(rnd>0){
@@ -45,17 +47,28 @@ public class Main {
 	}
 	
 	public static void addStudent(Student st){
-		studentList.add(studentList.size(),st);
-		BinaryTreeNode node = genNode(st);
-		node.setValue(studentList.size()-1);
-		tree.insert(node);
+		BinaryTreeNode node = deletedTree.search(genNode(st));
+		if(node == null){
+			studentList.add(studentList.size(),st);
+			node = genNode(st);
+			node.setValue(studentList.size()-1);
+			tree.insert(node);
+		}else{
+			studentList.get(node.getValue()).setDeleted(false);
+			studentList.get(node.getValue()).setName(st.getName());
+			studentList.get(node.getValue()).setAdresse(st.getAdresse());
+			tree.insert(node);
+			deletedTree.delete(node);
+		}
 	}
 	
 	public static void deleteStudent(Student st){
-		BinaryTreeNode node = genNode(st);
-		int index = tree.search(node).getValue();
+		BinaryTreeNode node = tree.search(genNode(st));
+		//BinaryTreeNode node = genNode(st);
+		//int index = tree.search(node).getValue();
 		if(tree.delete(node)){
-			studentList.get(index).setDeleted(true);
+			deletedTree.insert(node);
+			studentList.get(node.getValue()).setDeleted(true);
 		}else System.out.println("\n\nMatrikelnummer nicht vorhanden, oder kann nicht gelöscht werden.\n\n");
 	}
 	

@@ -67,6 +67,9 @@ class BinaryTree {
 	}
 	
 	public BinaryTreeNode search(BinaryTreeNode node){
+		if(root==null){
+			return null;
+		}
 		BinaryTreeNode focusNode=root;
 		int cT = focusNode.getKey().compareTo(node.getKey());
 		while(cT!=0){
